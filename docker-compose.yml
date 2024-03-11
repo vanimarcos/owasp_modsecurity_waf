@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: node-app
+    container_name: owasp_sec_app
+    volumes:
+      - owasp_sec_volume_files:/usr/src/app/storage
+      - owasp_sec_volume_logs:/usr/src/app/logs
+      - ./ssl/server:/usr/src/app/ssl/server
+    ports:
+      - 3000:3000
+    networks:
+      - owasp_modsec
+  waf:
+      container_name: nginx-waf
+      image: owasp/modsecurity-crs:4.0.0-nginx-202402261002
+      ports:
+          - '80:80'
+      volumes:
+          - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
+          - ./logs/nginx:/var/log/nginx
+      environment:
+          - PROXY=1
+          - MODSEC_AUDIT_LOG_FORMAT=Native
+          - MODSEC_AUDIT_LOG_TYPE=Serial
+          - MODSEC_AUDIT_LOG="/var/log/modsec_audit.log"
+      networks:
+        - owasp_modsec
+networks:
+  owasp_modsec:
+    driver: bridge
+
+volumes:
+  owasp_sec_volume_files: {}
+  owasp_sec_volume_logs: {}
