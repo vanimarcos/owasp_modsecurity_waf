@@ -11,3 +11,4 @@ dist
 .dccache
 .dcignore
 dependency-check-report.html
+.DS_Store

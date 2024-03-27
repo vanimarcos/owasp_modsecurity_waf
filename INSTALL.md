@@ -1,6 +1,11 @@
 ## Installation
 
-1. Clone the repo and acess its folder via terminal 
+1. Clone the repo and access its folder via terminal
+
+2. Create a .env file in the current folder and setup the var
+```sh 
+touch .env 
+```
 
 2. Run the code in the terminal 
 
@@ -13,3 +18,8 @@ chmod +x install.sh
 ```sh
 sudo ./install.sh
 ```
+
+4. To test a rule 
+
+
+5. Add a costumized rule 

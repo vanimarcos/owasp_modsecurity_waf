@@ -16,20 +16,20 @@ services:
     networks:
       - owasp_modsec
   waf:
-      container_name: nginx-waf
-      image: owasp/modsecurity-crs:4.0.0-nginx-202402261002
-      ports:
-          - '80:80'
-      volumes:
-          - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
-          - ./logs/nginx:/var/log/nginx
-      environment:
-          - PROXY=1
-          - MODSEC_AUDIT_LOG_FORMAT=Native
-          - MODSEC_AUDIT_LOG_TYPE=Serial
-          - MODSEC_AUDIT_LOG="/var/log/modsec_audit.log"
-      networks:
-        - owasp_modsec
+    container_name: nginx-waf
+    image: owasp/modsecurity-crs:4.0.0-nginx-202402261002
+    ports:
+        - '80:80'
+    volumes:
+        - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
+        - ./logs/nginx:/var/log/nginx
+    environment:
+        - PROXY=1
+        - MODSEC_AUDIT_LOG_FORMAT=Native
+        - MODSEC_AUDIT_LOG_TYPE=Serial
+        - MODSEC_AUDIT_LOG="/var/log/modsec_audit.log"
+    networks:
+      - owasp_modsec
 networks:
   owasp_modsec:
     driver: bridge
